@@ -1,4 +1,4 @@
-## JAM-ME
+# JAM-ME
 # Leveraging jamming to help drones complete their mission
 
 <p align="center">
