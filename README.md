@@ -12,7 +12,7 @@
      <img alt="Setup Phase" src="./img/power_distance.png" width="500">
 </p>
 
-Description
+<em>JAM-ME</em>: a solution that allows the drone to exploit an adversarial jamming signal to implement an emergency but yet effective navigation system that does not require any other type of on-board navigational sensor/instrument---the drone still being able to accomplish its mission.
 
 ## How it works
 
