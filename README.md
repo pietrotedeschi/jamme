@@ -1,5 +1,4 @@
-# JAM-ME
-# Leveraging jamming to help drones complete their mission
+# JAM-ME: Leveraging jamming to help drones complete their mission
 
 <p align="center">
      <img alt="License" src="https://img.shields.io/static/v1.svg?label=license&message=GPL3&color=brightgreen">
