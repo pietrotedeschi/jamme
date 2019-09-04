@@ -35,7 +35,7 @@ We consider the following entities:
 In order to prove the feasibility of drone navigation under jamming conditions, we consider the following challenging scenario configuration.
 
 <p align="center">
-     <img alt="Setup Phase" src="./img/scenario.png" width="500">
+     <img alt="Scenario" src="./img/scenario.png" width="500">
 </p>
 
 In the baseline scenario, a jammer is protecting an area against drones and UAV. Basically, the drone is programmed to fly over the area in order to reach the target. Since in the jammed area, the GPS will be not available to the drone, the adversary re-programs the firmware of the drone to leverage the jamming signal source as radio-beacon, and finally reach the target position.
