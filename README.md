@@ -56,7 +56,7 @@ Finally, a *flight controller* is leveraged to allow the drone to fly towards a 
 * MATLAB release R2018b or newer
 * Statistics and Machine Learning Toolbox
 
-## How to run the code
+## How to run the code (Basic Example)
 In order to replicate a scenario with no wind and the target position not equal to the jammer position, you can execute the following `code` on the MATLAB Command Window:
 
 `clc; clear all; d = drone(); d = d.setwinddir(-pi/2); d = d.set_wind_strength(0); d.target_pos = [8,11]; d.mov = [0.1 0]; d = d.fly(); d.show()
