@@ -16,7 +16,7 @@
 ## How it works
 
 We consider the following entities:
-* **Drone**:An UAV flying from a source position to a target destination. We assume the drone not being remote controlled but pre-programmed according to a mission plan. The mission plan involves a set of way-points to reach a pre-determined target.
+* **Drone**: An UAV flying from a source position to a target destination. We assume the drone not being remote controlled but pre-programmed according to a mission plan. The mission plan involves a set of way-points to reach a pre-determined target.
 * **Adversary**: We assume the adversary is able to reprogram the drone and being able to change the mission plan parameters and all the flight control systems.
 * **Target**: The destination point that the drone has to reach.
 * **Jammer**: The radio device used to protect the target neighbourhood. We assume a very powerful, omnidirectional (with an isotropic antenna) jammer, being able to jam all the radio frequencies in the radio spectrum over a circle of radius *d*. As following, the <a href="https://en.wikipedia.org/wiki/Friis_transmission_equation">free-space model</a> adopted:
@@ -48,7 +48,7 @@ In the baseline scenario, a jammer is protecting an area against drones and UAV.
 
 * **INS**: We assume the worst case scenario according to which the drone does not resort to any navigation system based on sensors that might allow to compute its current position and planning the future trajectory. 
 
-Finally, a *flight controller* is leveraged to allow the drone to fly towards a target, even in the presence of a jammer. As previously introduced, our idea mainly resorts to leverage the RSS estimated by the drone with respect to the jammer, so as to infer on the direction to take to reach the target.
+Finally, a *flight controller* is leveraged to allow the drone to fly towards a target, even in the presence of a jammer. As previously introduced, our idea mainly resorts to leverage the *Received Signal Strength* estimated by the drone with respect to the jammer, so as to infer on the direction to take to reach the target.
 
 * *For further details, please refer to the paper.*
 
