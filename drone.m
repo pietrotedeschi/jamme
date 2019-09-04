@@ -25,8 +25,8 @@ classdef drone
         dt                    % Distance Drone-Target
         ptD                   % Distance beetween Driftted Drone and Jammer
         ptND                  % Matrix: (x,y) to reach the target, distance, power received
-        PrND                  % VARIABILI DI SUPPORTO PER MEMORIZZARE PERCORSO IDEALE
-        pathND                % VARIABILI DI SUPPORTO PER MEMORIZZARE PERCORSO IDEALE
+        PrND                  % Support variable to store the ideal path
+        pathND                % Support variable to store the ideal path
         ldt                   % Last distance between last path and target
         u                     % Compensation
         speed                 % Path coordinates inside the jamming area (last part of path)
@@ -36,9 +36,9 @@ classdef drone
         ejradius              % Expected Jamming radius
         TARGETAPPROACH        % Approaching the target
         err                   % Difference between Pr and SNR used in the controller
-        winddir               % wind direction: vector tail at the jammer position
-        windstrength          % wind strength (vector)
-        entrypoint            % absolute coordinates of the entry point in the jamming area
+        winddir               % Wind direction: vector tail at the jammer position
+        windstrength          % Wind strength (vector)
+        entrypoint            % Absolute coordinates of the entry point in the jamming area
         dronePosEstJam        % Position of the drone after having estimated the jammer position
         xstrength             % Wind Strength X component
         strength              % Wind Intensity
@@ -87,14 +87,12 @@ classdef drone
         end
         
         function Pr = friis(obj, d)
-            % Friis equation: https://it.wikipedia.org/wiki/Equazione_di_trasmissione_di_Friis
             c = physconst('lightspeed');
             lambda = c / obj.f;
             Pr = obj.Pt + obj.Gt + obj.Gr + 20*log10(lambda./(4*pi*d));
         end
 
         function d = friisInv(obj, Pr)
-            % Friis equation: https://it.wikipedia.org/wiki/Equazione_di_trasmissione_di_Friis
             c = physconst('lightspeed');
             lambda = c / obj.f;
             d = 1 / (4*pi / lambda * 10^((Pr - obj.Pt - obj.Gt - obj.Gr)/20));
@@ -129,9 +127,6 @@ classdef drone
         function obj = controller2(obj, e, kc, j)
             %% Parameters: obj, Powers' difference, Gain, index, compensation
             %% Closed loop linear controller
-            % Standard Form --> https://courses.cs.washington.edu/courses/csep567/10wi/lectures/Lecture9.pdf
-            % See this (page 7): http://users.abo.fi/htoivone/courses/isy/DiscreteTimeSystems.pdf
-            % Nostra situazione: https://www.researchgate.net/profile/Savas_Sahin/publication/328722940_Stochastic_Optimization_of_PID_Parameters_for_Twin_Rotor_System_with_Multiple_Nonlinear_Regression/links/5bdd9aa54585150b2b9bb30f/Stochastic-Optimization-of-PID-Parameters-for-Twin-Rotor-System-with-Multiple-Nonlinear-Regression.pdf?origin=publication_detail
             Tc      =   1;
             kp      =   0.6*kc;
             ki      =   2*kp/Tc;
@@ -150,14 +145,9 @@ classdef drone
         end
         
         function obj = estimate_jammer_position(obj, i)
-            %% Literature:
-            % 1. https://www.researchgate.net/publication/45860167_Error_analysis_for_circle_fitting_algorithms
-            % 2. http://people.cas.uab.edu/~mosya/cl/MATLABcircle.html
             %% If there are at least 20 RSS samples
             if obj.idx_ev > 0 && i - obj.idx_ev > 3
                 par = CircleFitByPratt(obj.path(obj.idx_ev:end, :));
-                %par = HyperSVD(obj.path(obj.idx_ev:end, :));
-                %par = TaubinSVD(obj.path(obj.idx_ev:end, :))
                 %% Est. x and y, and radius
                 obj.jam_est = [obj.jam_est; par];
                 %% If there are at least 10 estimations of the center
@@ -185,11 +175,7 @@ classdef drone
                 obj.Pr = [obj.Pr; [d, friis(obj, d)]];
                 
                 %% Update obj.mov according to the RSS
-                if obj.JAM_EVASION                    
-                    %dP = obj.Pr(end, 2) - obj.Pr(2, end-1);
-                    %b = [b; obj.rec_dir * dP];
-                    %obj = controller(obj, b, 5, h);
-                                        
+                if obj.JAM_EVASION                                                           
                     e = obj.Pr(:, 2) - obj.mSNR;
                     obj = controller(obj, e, 1, h);
                     new_yaw = obj.mov(end, 2) + obj.u;
@@ -226,7 +212,6 @@ classdef drone
                 obj.Pr = [obj.Pr; [d, friis(obj, d)]];
 
                 %% Update obj.mov according to the RSS
-         
                 e = obj.Pr(:, 2) - obj.mSNR;                    
                 obj = controller(obj, -dir*e, 1, i);
                 new_yaw = obj.mov(end, 2) + obj.u;
@@ -302,9 +287,6 @@ classdef drone
                 obj.PrND = [obj.PrND; [d, friis(obj, d)]];
                 
                 %% Compute the entrance angle, P1 = drone path, P2 = target
-                %% Moved out of the loop: TO BE CHECKED
-                %obj.angin = atan2(obj.target_pos(2) - obj.path(end,2), obj.target_pos(1) - obj.path(end,1));
-
                 movXY2 = [obj.mov(end, 1) * cos(obj.angin), obj.mov(end, 1) * sin(obj.angin)];
                 obj.pathND = [obj.pathND; [obj.pathND(end, :) +  movXY2]];
                 obj.ptND = [obj.ptND; [d friis(obj, d)]];
@@ -325,7 +307,6 @@ classdef drone
                 outJammingArea = false;
 
                 dDroneEntry = pdist([obj.path(end, :); obj.entrypoint], 'euclidean');
-                %dDroneJammer = pdist([obj.jam_pos; obj.entrypoint], 'euclidean') - dDroneEntry;
 
                 speed = obj.friisInv(obj.Pr(end-1, 2)) - obj.friisInv(obj.Pr(end, 2));
                 
@@ -378,22 +359,16 @@ classdef drone
             hold on
             grid on
             f1 = figure(1);
-            %n1 = ['' num2str(obj.drift) '_' num2str(obj.stepdrift) 'G' '.png'];
-            %title(['Distance: ' num2str(obj.ldt) ' Drift ' num2str(obj.drift) ' LenDiv ' num2str(obj.stepdrift)]);
             plot(obj.jam_pos(:,1), obj.jam_pos(:,2), 'or', 'MarkerSize', 5, 'MarkerFaceColor', 'r');
-            %plot(obj.jam_est(:, 1), obj.jam_est(:, 2), '.r')
             plot(obj.jam_est(end, 1), obj.jam_est(end, 2), '*g');
             plot(obj.target_pos(:,1), obj.target_pos(:,2), 'xk', 'MarkerSize', 15, 'MarkerFaceColor', 'k', 'LineWidth', 2)
-            plot(obj.path(:,1), obj.path(:,2), 'o-k')
-            
-            %pos = [obj.jam_pos - obj.DmSNR, 2*obj.DmSNR, 2*obj.DmSNR]; rectangle('Position', pos, 'Curvature', [1 1], 'EdgeColor', 'r')
+            plot(obj.path(:,1), obj.path(:,2), 'o-k')          
             pos = [obj.jam_est(end,[1 2]) - obj.DmSNR, 2*obj.DmSNR, 2*obj.DmSNR]; rectangle('Position', pos, 'Curvature', [1 1], 'EdgeColor', 'r')
             
             %% Print the wind vector
             [xw, yw] = pol2cart(obj.winddir, 2);
             plot([obj.jam_pos(1), obj.jam_pos(1) + xw], [obj.jam_pos(2), obj.jam_pos(2) + yw], '-g', 'LineWidth', 2);
             
-            %% TO BE REMOVED
             plot(obj.entrypoint(1), obj.entrypoint(2), 'or')
         end
                 
