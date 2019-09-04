@@ -19,14 +19,19 @@ We consider the following entities:
 * **Drone**:An UAV flying from a source position to a target destination. We assume the drone not being remote controlled but pre-programmed according to a mission plan. The mission plan involves a set of way-points to reach a pre-determined target.
 * **Adversary**: We assume the adversary is able to reprogram the drone and being able to change the mission plan parameters and all the flight control systems.
 * **Target**: The destination point that the drone has to reach.
-* **Jammer**: The radio device used to protect the target neighbourhood. We assume a very powerful, omnidirectional jammer, being able to jam all the radio frequencies in the radio spectrum over a circle of radius *d*. As following, the mathematical model adopted: 
+* **Jammer**: The radio device used to protect the target neighbourhood. We assume a very powerful, omnidirectional (with an isotropic antenna) jammer, being able to jam all the radio frequencies in the radio spectrum over a circle of radius *d*. As following, the mathematical model adopted: 
 
 <img src="http://latex.codecogs.com/gif.latex?P_r&space;=&space;P_t&space;&plus;&space;G_t&space;&plus;&space;G_r&space;&plus;&space;20\log_{10}(\frac{c}{4\pi&space;df})" title="P_r = P_t + G_t + G_r + 20\log_{10}(\frac{c}{4\pi df})" />
 
-<img src="http://latex.codecogs.com/gif.latex?d&space;=&space;\frac{1}{\frac{4\pi&space;f}{c}&space;10^{(\frac{P_r-P_t}{20})" title="d = \frac{1}{\frac{4\pi f}{c} 10^{(\frac{P_r-P_t}{20})" />
+<img src="http://latex.codecogs.com/gif.latex?d&space;=&space;\frac{1}{\frac{4\pi&space;f}{c}&space;10^{(\frac{P_r-P_t}{20})}}" title="d = \frac{1}{\frac{4\pi f}{c} 10^{(\frac{P_r-P_t}{20})}}" />
 
-we obtained $d = \mathcal{D}_{thr}$, by assuming the drone power receiving threshold equals to $P_r = -30$dBm, the constant jammer transmission power is $P_t = 20$dBm, the antennas' gains set to $G_t=G_r=0$ ( we are assuming that the jammer adopts an isotropic antenna to radiate the energy uniformly in all the directions) \cite{fahlstrom2012introduction}, and the GPS frequency $f = 1575.42$MHz.}
-\end{itemize}
+### *Assumptions in our scenario*
+* *GPS* frequency *f* = 1575.42 MHz
+* *c* is the speed of light
+* *d* is the distance between the drone and the jammer
+* *Pt* and *Pr* are the transmitted and the received power by the jammer and the drone, respectively
+* Antenna Gains = 0 dBi
+
 
 In order to prove the feasibility of drone navigation under jamming conditions, we consider the following challenging scenario configuration.
 
