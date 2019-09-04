@@ -50,9 +50,7 @@ In the baseline scenario, a jammer is protecting an area against drones and UAV.
 
 Finally, a *flight controller* is leveraged to allow the drone to fly towards a target, even in the presence of a jammer. As previously introduced, our idea mainly resorts to leverage the *Received Signal Strength* estimated by the drone with respect to the jammer, so as to infer on the direction to take to reach the target.
 
-```diff
-! For further details, please refer to the paper.
-```
+*For further details, please refer to the paper.*
 
 ## Requirements
 * MATLAB release R2018b or newer
