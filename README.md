@@ -26,7 +26,8 @@ In order to replicate a scenario with no wind and the target position not equal 
 `
 
 ## Requirements
-Requires MATLAB release R2018b or newer and the Statistics and Machine Learning Toolbox.
+* MATLAB release R2018b or newer
+* Statistics and Machine Learning Toolbox
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
