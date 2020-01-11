@@ -1,4 +1,4 @@
-# JAM-ME: Leveraging jamming to help drones complete their mission
+# JAM-ME: Leveraging Jamming to Help Drones Complete Their Mission
 
 <p align="center">
      <img alt="License" src="https://img.shields.io/static/v1.svg?label=license&message=GPL3&color=brightgreen">
@@ -50,7 +50,7 @@ In the baseline scenario, a jammer is protecting an area against drones and UAV.
 
 Finally, a *flight controller* is leveraged to allow the drone to fly towards a target, even in the presence of a jammer. As previously introduced, our idea mainly resorts to leverage the *Received Signal Strength* estimated by the drone with respect to the jammer, so as to infer on the direction to take to reach the target.
 
-*For further details, please refer to the paper.*
+*For further details, please refer to the <a href="https://ieeexplore.ieee.org/document/8945330">paper</a>.*
 
 ## Requirements
 * MATLAB release R2018b or newer
